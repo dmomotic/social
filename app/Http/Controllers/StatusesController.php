@@ -17,4 +17,9 @@ class StatusesController extends Controller
             ]);
         return response()->json(['body' => $status->body]);
     }
+
+    public function index(){
+        //La funcion latest() ordena por fecha de creacion del mas reciente al mas antiguo
+        return Status::latest()->paginate(); //Automaticamente retoran un JSON
+    }
 }
