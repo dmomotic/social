@@ -20,10 +20,12 @@ class StatusResourceTest extends TestCase
         //La funcion resolve nos permite devolver el resultado que deseamos como un array
         $statusResource = StatusResource::make($status)->resolve();
 
+        $this->assertEquals($status->id, $statusResource['id']);
         $this->assertEquals($status->body, $statusResource['body']);
         $this->assertEquals($status->user->name, $statusResource['user_name']);
         $this->assertEquals('https://aprendible.com/images/default-avatar.jpg', $statusResource['user_avatar']);
         $this->assertEquals($status->created_at->diffForHumans(), $statusResource['ago']);
+        $this->assertEquals(false, $statusResource['is_liked']);
 
     }
     
