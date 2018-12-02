@@ -35,5 +35,22 @@ class CanLikeStatusesTest extends TestCase
         $response = $this->post(route('statuses.like.store', $status));
         $response->assertRedirect('login'); //Para que pase agregar middleware auth en ruta
     }
+
+    /** @test */
+    public function an_authenticated_user_can_unlike_statuses()
+    {
+        $this->withOutExceptionHandling();
+
+        $user = factory(User::class)->create();
+        $status = factory(Status::class)->create();
+
+        $this->actingAs($user)->postJson(route('statuses.like.store', $status));
+        $this->actingAs($user)->deleteJson(route('statuses.like.destroy', $status));
+
+        $this->assertDatabaseMissing('likes', [
+            'user_id' => $user->id,
+            'status_id' => $status->id,
+        ]);
+    }
     
 }

@@ -47698,7 +47698,7 @@ exports = module.exports = __webpack_require__(11)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47742,6 +47742,9 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -47856,7 +47859,10 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { id: "create-status" } },
-        [_vm._v("Publicar")]
+        [
+          _c("i", { staticClass: "fa fa-paper-plane mr-1" }),
+          _vm._v("\n                Publicar\n            ")
+        ]
       )
     ])
   }
@@ -47956,7 +47962,7 @@ exports = module.exports = __webpack_require__(11)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47967,6 +47973,27 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -48011,6 +48038,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         like: function like(status) {
             axios.post('/statuses/' + status.id + '/likes').then(function (res) {
                 status.is_liked = true;
+                status.likes_count++;
+            });
+        },
+        unlike: function unlike(status) {
+            axios.delete('/statuses/' + status.id + '/likes').then(function (res) {
+                status.is_liked = false;
+                status.likes_count--;
             });
         }
     }
@@ -48026,6 +48060,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { on: { click: _vm.redirectIfGuest } },
     _vm._l(_vm.statuses, function(status) {
       return _c("div", { staticClass: "card mb-3 border-0 shadow" }, [
         _c("div", { staticClass: "card-body d-flex flex-column" }, [
@@ -48055,28 +48090,73 @@ var render = function() {
           _c("p", {
             staticClass: "card-text text-secondary",
             domProps: { textContent: _vm._s(status.body) }
-          }),
-          _vm._v(" "),
-          status.is_liked
-            ? _c("button", [_vm._v("TE GUSTA")])
-            : _c(
-                "button",
-                {
-                  attrs: { dusk: "like-btn" },
-                  on: {
-                    click: function($event) {
-                      _vm.like(status)
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "card-footer p-2 d-flex justify-content-between align-items-center"
+          },
+          [
+            status.is_liked
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-link btn-sm",
+                    attrs: { dusk: "unlike-btn" },
+                    on: {
+                      click: function($event) {
+                        _vm.unlike(status)
+                      }
                     }
-                  }
-                },
-                [_vm._v("ME GUSTA")]
-              )
-        ])
+                  },
+                  [_vm._m(0, true)]
+                )
+              : _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-link btn-sm",
+                    attrs: { dusk: "like-btn" },
+                    on: {
+                      click: function($event) {
+                        _vm.like(status)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "far fa-thumbs-up text-primary mr-1"
+                    }),
+                    _vm._v("\n                    ME GUSTA")
+                  ]
+                ),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-secondary mr-2" }, [
+              _c("i", { staticClass: "far fa-thumbs-up" }),
+              _vm._v(" "),
+              _c("span", { attrs: { dusk: "likes-count" } }, [
+                _vm._v(_vm._s(status.likes_count))
+              ])
+            ])
+          ]
+        )
       ])
     })
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("strong", [
+      _c("i", { staticClass: "fa fa-thumbs-up text-primary mr-1" }),
+      _vm._v("\n                            TE GUSTA\n                        ")
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -48102,6 +48182,12 @@ module.exports = {
         },
         guest: function guest() {
             return !this.isAuthenticated;
+        }
+    },
+    methods: {
+        redirectIfGuest: function redirectIfGuest() {
+            //Se asigno al div principal para que lo propague a sus hijos en StatusesList.vue
+            if (this.guest) return window.location.href = "/login";
         }
     }
 };

@@ -12,4 +12,9 @@ module.exports = {
             return ! this.isAuthenticated;
         }
     },
+    methods:{
+        redirectIfGuest(){ //Se asigno al div principal para que lo propague a sus hijos en StatusesList.vue
+            if (this.guest) return window.location.href="/login"; 
+        }
+    }
 };

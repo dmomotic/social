@@ -10,6 +10,6 @@ Route::post('statuses', 'StatusesController@store')->name('statuses.store')->mid
 
 //Statuses Likes routes
 Route::post('statuses/{status}/likes', 'StatusLikeController@store')->name('statuses.like.store')->middleware('auth');
-
+Route::delete('statuses/{status}/likes', 'StatusLikeController@destroy')->name('statuses.like.destroy')->middleware('auth');
 
 Route::auth();

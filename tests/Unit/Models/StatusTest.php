@@ -30,12 +30,16 @@ class StatusTest extends TestCase
     }
 
     /** @test */
-    public function a_status_can_be_liked()
+    public function a_status_can_be_liked_and_unliked()
     {
         $status = factory(Status::class)->create();
         $this->actingAs(factory(User::class)->create());
+        //Like a comentario
         $status->like();
-        $this->assertEquals(1, $status->likes->count());
+        $this->assertEquals(1, $status->fresh()->likes->count());
+        //Dislike a comentario
+        $status->unlike();
+        $this->assertEquals(0, $status->fresh()->likes->count()); //Fresh para no buscar en cache
     }
     
     /** @test */
@@ -62,6 +66,16 @@ class StatusTest extends TestCase
         $status->like();
         //Comprobamos que ahora tenga el like del usuario
         $this->assertTrue($status->isLiked());
+    }
+    
+    /** @test */
+    public function a_status_knows_how_many_likes_it_has()
+    {
+        $status = factory(Status::class)->create();
+        $this->assertEquals(0, $status->likesCount());
+        
+        factory(Like::class, 2)->create(['status_id' => $status->id]);
+        $this->assertEquals(2, $status->likesCount());
     }
     
 }
